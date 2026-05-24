@@ -1,9 +1,6 @@
 name: Deploy to S3
 
 on:
-  push:
-    branches:
-      - main
 
   schedule:
     - cron: '30 8 24 5 *'
