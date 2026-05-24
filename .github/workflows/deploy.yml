@@ -5,10 +5,8 @@ on:
     branches:
       - main
 
-  workflow_dispatch:
-
   schedule:
-    - cron: '15 8 24 5 *'
+    - cron: '30 8 24 5 *'
 
 jobs:
   deploy:
