@@ -3,4 +3,27 @@ name: Deploy to S3
 on:
   push:
     tags:
-      - 'v*' # 例: v1.0.0 や v2026.08.17 などのタグを検知
+      - 'v*'  # 「v1.0.0」など、"v"から始まるタグがPushされたら起動
+      # もし "v" をつけない（例: "1.0.0" や "release-1.0" など）場合は以下のように指定
+      # - '*' 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*"
