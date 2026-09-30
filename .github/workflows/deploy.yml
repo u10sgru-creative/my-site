@@ -1,11 +1,7 @@
 name: Deploy to S3
 
 on:
-  push:
-    tags:
-      - 'v*'  # 「v1.0.0」など、"v"から始まるタグがPushされたら起動
-      # もし "v" をつけない（例: "1.0.0" や "release-1.0" など）場合は以下のように指定
-      # - '*' 
+  workflow_dispatch:
 
 jobs:
   deploy:
